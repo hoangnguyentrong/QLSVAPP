@@ -1,0 +1,48 @@
+﻿@model List<Student>;
+@{
+    ViewData["Title"] = "Student Page";
+    var students = Model;
+    var departments = ViewBag.Departments as List<Department> ?? []; 
+    @* var classNames = ViewBag.ClassNames as List<string>?? []; *@
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome Student Page</h1>
+  
+    <select class="form-control" name="DepartmentId" id="DepartmentId">
+        @foreach(var department in departments){
+                <option value="@department.Id">@department.Name</option>
+        }
+    </select>
+   
+    <table class="table table-hover">
+        <thead>
+            <th>ID</th>
+             <th>Code</th>
+              <th>Name</th>
+               <th>Birthday</th>
+                <th>Address</th>
+                <th>Department</th>
+                 <th>
+                    <a class="btn-btn-primary" href="/Student/Create">Create</a>
+                    </th>
+        </thead>
+        <tbody>
+            @foreach(var student in students){
+                <tr>
+                 <td>@student.Id</td>
+                 <td>@student.Code</td>
+                 <td>@student.Name</td>
+                 <td>@student.Birthday</td>
+                 <td>@student.Address</td>
+                 <td>@student.Department?.Name</td>
+                 <td>
+                    <a class="btn-btn-primary" href="/Student/Update?id=@student.Id">Update</a>
+                    <a class="btn-btn-primary" onclick="return confirm('ARE you sure?')" href="/Student/Delete?id=@student.Id">Delete</a>
+                 </td>
+                </tr>
+            }
+                
+        </tbody>
+    </table>
+</div>
